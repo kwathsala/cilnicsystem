@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cashier & Pharmacy - Clinic System</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="topbar">
+    <h2>💊 Cashier & Pharmacy</h2>
+    <div class="user-info">
+      <span id="userLabel"></span>
+      <a href="inventory.html" style="color:#fff;font-size:13px;text-decoration:none;margin-right:6px;">📦 Inventory</a>
+      <button id="logoutBtn">Logout</button>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- Pending Queue -->
+    <div class="card">
+      <h3>Pending Prescriptions (From Doctor)</h3>
+      <div id="queueList"><p style="color:#6b7280; font-size:13.5px;">Loading...</p></div>
+    </div>
+
+    <!-- Billing Panel (shown when a visit is selected from queue) -->
+    <div class="card" id="billingCard" style="display:none;">
+      <h3>Billing</h3>
+      <div id="allergyBanner"></div>
+      <div id="patientMeta" style="margin-bottom:14px;"></div>
+
+      <table>
+        <thead><tr><th>Medicine</th><th>Dosage</th><th>Duration</th><th>Qty</th><th>Total</th><th></th></tr></thead>
+        <tbody id="itemsList"></tbody>
+      </table>
+
+      <div id="proprietarySection" style="margin-top:18px; display:none;">
+        <h3 style="border:none; margin-bottom:8px;">⭐ Proprietary Products (Regular/Monthly Patient)</h3>
+        <div class="form-grid" style="grid-template-columns: 2fr 1fr 0.6fr;">
+          <div class="field">
+            <label>Product</label>
+            <select id="proprietarySelect"></select>
+          </div>
+          <div class="field">
+            <label>Qty</label>
+            <input type="number" id="proprietaryQty" value="1" min="1">
+          </div>
+          <div class="field">
+            <button type="button" class="btn" id="addProprietaryBtn">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:flex-end;">
+        <div class="field" style="max-width:200px;">
+          <label>Payment Method</label>
+          <select id="paymentMethod">
+            <option value="Cash">Cash</option>
+            <option value="Card">Card</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:13.5px;">Consultation Fee: <span id="feeDisplay">Rs. 0.00</span></div>
+          <div style="font-size:13.5px;">Medicine Total: <span id="medTotalDisplay">Rs. 0.00</span></div>
+          <div style="font-size:17px; font-weight:700; color:#0f4c81;">Grand Total: <span id="grandTotalDisplay">Rs. 0.00</span></div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px; text-align:right;">
+        <button type="button" class="btn" id="finalizeBtn">Finalize & Print Invoice</button>
+      </div>
+    </div>
+    <p id="billingMsg" style="margin-top:10px; font-size:14px; font-weight:600; text-align:right;"></p>
+
+  </div>
+
+  <script src="js/common.js?v=202608161754"></script>
+  <script src="js/cashier.js?v=202608161754"></script>
+</body>
+</html>

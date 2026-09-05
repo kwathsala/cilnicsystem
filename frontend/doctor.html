@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doctor Consultation - Clinic System</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+    .queue-sidebar {
+        position: fixed;
+        top: 78px;
+        right: 18px;
+        width: 230px;
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 14px;
+        z-index: 20;
+    }
+    .queue-sidebar h4 {
+        margin: 0 0 10px 0;
+        font-size: 14px;
+        color: #0f4c81;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .queue-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        text-align: left;
+        background: #f7f9fb;
+        border: 1px solid #eef1f4;
+        border-radius: 8px;
+        padding: 9px 10px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        font-size: 13px;
+    }
+    .queue-item:hover { background: #eaf2fb; border-color: #b8d4ef; }
+    .queue-token-num {
+        background: #0f4c81;
+        color: #fff;
+        font-weight: 700;
+        font-size: 12px;
+        min-width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .queue-empty { font-size: 12.5px; color: #9ca3af; }
+    @media (max-width: 1000px) {
+        .queue-sidebar { position: static; width: auto; margin: 16px 20px 0; }
+    }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <h2>🩺 Doctor's Consultation</h2>
+    <div class="user-info">
+      <span id="userLabel"></span>
+      <a href="analytics.html" style="color:#fff;font-size:13px;text-decoration:none;margin-right:6px;">📊 Analytics</a>
+      <button id="logoutBtn">Logout</button>
+    </div>
+  </div>
+
+  <div class="queue-sidebar" id="queueSidebar">
+    <h4>🎫 Today's Queue <span id="queueCount" style="color:#6b7280;font-weight:400;"></span></h4>
+    <div id="queueList"><div class="queue-empty">Loading...</div></div>
+  </div>
+
+  <div class="container">
+
+    <!-- Step 1: Select Patient -->
+    <div class="card">
+      <h3>1. Select Patient</h3>
+      <div class="form-grid">
+        <div class="field">
+          <label>Search Today's Queue (Name or Contact Number)</label>
+          <input type="text" id="searchInput" placeholder="Only patients Reception sent today...">
+        </div>
+      </div>
+      <div id="searchResults" style="margin-top:14px;"></div>
+      <div id="selectedPatientBanner" style="margin-top:14px;"></div>
+    </div>
+
+    <!-- Step 2: Consultation Form (shown after patient selected) -->
+    <div class="card" id="consultCard" style="display:none;">
+      <h3>2. Diagnosis & Prescription</h3>
+
+      <div class="field" style="margin-bottom:16px;">
+        <label>Diagnosis</label>
+        <textarea id="diagnosisInput" rows="3" placeholder="Enter diagnosis notes..."></textarea>
+      </div>
+
+      <h3 style="border:none; margin-bottom:8px;">Prescribed Medicines</h3>
+      <div class="form-grid" style="grid-template-columns: 2fr 1fr 1fr 0.7fr 0.5fr; align-items:end;">
+        <div class="field">
+          <label>Medicine</label>
+          <select id="medicineSelect"></select>
+        </div>
+        <div class="field">
+          <label>Dosage</label>
+          <input type="text" id="dosageInput" placeholder="e.g. 1 tablet twice a day">
+        </div>
+        <div class="field">
+          <label>Duration</label>
+          <input type="text" id="durationInput" placeholder="e.g. 5 days">
+        </div>
+        <div class="field">
+          <label>Qty</label>
+          <input type="number" id="quantityInput" value="1" min="1">
+        </div>
+        <div class="field">
+          <button type="button" class="btn" id="addMedicineBtn">+ Add</button>
+        </div>
+      </div>
+
+      <table style="margin-top:16px;">
+        <thead><tr><th>Medicine</th><th>Dosage</th><th>Duration</th><th>Qty</th><th>Price</th><th></th></tr></thead>
+        <tbody id="prescriptionList"></tbody>
+      </table>
+
+      <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
+        <div style="font-size:14px; display:flex; align-items:center; gap:8px;">
+          Consultation Fee: Rs.
+          <input type="number" id="consultFeeInput" min="0" step="0.01" style="width:100px; padding:6px 8px; border:1px solid #d1d5db; border-radius:6px; font-size:14px;">
+          <span style="font-size:12px; color:#6b7280;">(default filled in — change if needed for this patient)</span>
+        </div>
+        <button type="button" class="btn" id="completeBtn">Complete & Send to Pharmacy</button>
+      </div>
+    </div>
+
+    <p id="completeMsg" style="margin-top:10px; font-size:14px; font-weight:600;"></p>
+
+    <!-- Past Prescriptions by Date -->
+    <div class="card">
+      <h3>📅 Past Prescriptions by Date</h3>
+      <div class="form-grid" style="grid-template-columns: 1fr 1fr; align-items:end;">
+        <div class="field">
+          <label>Select Date</label>
+          <input type="date" id="historyDateInput">
+        </div>
+        <div class="field">
+          <button type="button" class="btn btn-secondary" id="historySearchBtn">Search</button>
+        </div>
+      </div>
+      <div id="historyResults" style="margin-top:14px;"></div>
+    </div>
+
+  </div>
+
+  <script src="js/common.js?v=202608161754"></script>
+  <script src="js/doctor.js?v=202608161754"></script>
+</body>
+</html>

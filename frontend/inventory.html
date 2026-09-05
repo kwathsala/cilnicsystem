@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Inventory Management - Clinic System</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+    .inv-toolbar {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+    .inv-toolbar input[type="text"] {
+        flex: 1;
+        padding: 9px 10px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 13.5px;
+    }
+    .diff-up { color: #065f46; font-weight: 600; }
+    .diff-down { color: #991b1b; font-weight: 600; }
+    .diff-flat { color: #6b7280; }
+    .price-edit-input {
+        width: 80px;
+        padding: 5px 6px;
+        border: 1px solid #d1d5db;
+        border-radius: 5px;
+        font-size: 13px;
+    }
+    .stock-edit-input {
+        width: 65px;
+        padding: 5px 6px;
+        border: 1px solid #d1d5db;
+        border-radius: 5px;
+        font-size: 13px;
+    }
+    .row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+    .row-actions button { font-size: 12px; padding: 5px 9px; }
+    tr.low-stock-row td { background: #fef2f2; }
+    tr.expiring-row td { background: #fffbeb; }
+    .legend { display: flex; gap: 14px; font-size: 12px; color: #6b7280; margin-bottom: 10px; }
+    .legend span { display: flex; align-items: center; gap: 5px; }
+    .legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <h2>💊 Inventory Management</h2>
+    <div class="user-info">
+        <span id="userLabel"></span>
+        <a href="cashier.html" style="color:#fff;font-size:13px;text-decoration:none;margin-right:6px;">← Cashier</a>
+        <button id="logoutBtn">Logout</button>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="card">
+        <h3>➕ Add New Medicine</h3>
+        <form id="addMedicineForm" class="form-grid">
+            <div class="field">
+                <label>Medicine Name</label>
+                <input type="text" id="newName" required>
+            </div>
+            <div class="field">
+                <label>Category</label>
+                <input type="text" id="newCategory" placeholder="e.g. Syrup, Tablet">
+            </div>
+            <div class="field">
+                <label>Unit Price (Rs.)</label>
+                <input type="number" id="newPrice" min="0" step="0.01" required>
+            </div>
+            <div class="field">
+                <label>Initial Stock Qty</label>
+                <input type="number" id="newStock" min="0" step="1" value="0" required>
+            </div>
+            <div class="field">
+                <label>Expiry Date</label>
+                <input type="date" id="newExpiry">
+            </div>
+            <div class="field" style="display:flex;align-items:flex-end;gap:8px;">
+                <label style="margin:0;display:flex;align-items:center;gap:6px;">
+                    <input type="checkbox" id="newProprietary" style="width:auto;"> ⭐ Proprietary product
+                </label>
+            </div>
+            <div class="field full" style="grid-column: 1 / -1;">
+                <button type="submit" class="btn">Add Medicine</button>
+            </div>
+        </form>
+        <div id="addMsg" style="font-size:13px;margin-top:8px;"></div>
+    </div>
+
+    <div class="card">
+        <h3>📦 Current Stock</h3>
+        <div class="legend">
+            <span><i style="background:#fee2e2;"></i> Low stock (&lt; <span id="lowStockThreshold">10</span>)</span>
+            <span><i style="background:#fef3c7;"></i> Expiring within 30 days</span>
+        </div>
+        <div class="inv-toolbar">
+            <input type="text" id="searchBox" placeholder="Search medicine name or category...">
+            <button class="btn btn-secondary" id="refreshBtn">Refresh</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Medicine</th>
+                    <th>Category</th>
+                    <th>Stock</th>
+                    <th>vs 1 week ago</th>
+                    <th>Price (Rs.)</th>
+                    <th>vs 1 week ago</th>
+                    <th>Cost (Rs.)</th>
+                    <th>Expiry</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="inventoryTableBody">
+                <tr><td colspan="9">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script src="js/common.js?v=202608161754"></script>
+<script src="js/inventory.js?v=202608161754"></script>
+</body>
+</html>

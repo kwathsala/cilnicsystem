@@ -1,0 +1,209 @@
+/* ============================================================
+   CLINIC MANAGEMENT SYSTEM - BASE STYLES
+   ============================================================ */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f4f6f9;
+    color: #1f2937;
+}
+
+/* ---------- Login Page ---------- */
+.login-body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f4c81, #1e88a8);
+}
+
+.login-card {
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    width: 360px;
+}
+
+.login-card h1 {
+    font-size: 20px;
+    color: #0f4c81;
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    color: #6b7280;
+    font-size: 13px;
+    margin-bottom: 24px;
+}
+
+.login-card label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 6px;
+    margin-top: 14px;
+    color: #374151;
+}
+
+.login-card input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.login-card button {
+    width: 100%;
+    margin-top: 22px;
+    padding: 11px;
+    background: #0f4c81;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.login-card button:hover { background: #0c3d68; }
+
+.error-msg {
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 12px;
+    min-height: 16px;
+}
+
+/* ---------- App Shell (used by all internal pages) ---------- */
+.topbar {
+    background: #0f4c81;
+    color: #fff;
+    padding: 14px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar h2 { font-size: 17px; }
+
+.topbar .user-info {
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.topbar button {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.topbar button:hover { background: rgba(255,255,255,0.28); }
+
+.container {
+    max-width: 1100px;
+    margin: 24px auto;
+    padding: 0 20px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    margin-bottom: 20px;
+}
+
+.card h3 {
+    font-size: 15px;
+    color: #0f4c81;
+    margin-bottom: 14px;
+    border-bottom: 1px solid #eef1f4;
+    padding-bottom: 8px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.form-grid.full { grid-template-columns: 1fr; }
+
+.field label {
+    display: block;
+    font-size: 12.5px;
+    color: #4b5563;
+    margin-bottom: 5px;
+}
+
+.field input, .field select, .field textarea {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13.5px;
+}
+
+.btn {
+    background: #0f4c81;
+    color: #fff;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13.5px;
+}
+
+.btn:hover { background: #0c3d68; }
+
+.btn-secondary { background: #6b7280; }
+.btn-secondary:hover { background: #52585f; }
+
+.btn-danger { background: #dc2626; }
+.btn-danger:hover { background: #b91c1c; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+th, td {
+    text-align: left;
+    padding: 9px 10px;
+    border-bottom: 1px solid #eef1f4;
+}
+
+th { color: #374151; background: #f9fafb; }
+
+.badge {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 12px;
+    font-size: 11.5px;
+    font-weight: 600;
+}
+
+.badge-warning { background: #fef3c7; color: #92400e; }
+.badge-success { background: #d1fae5; color: #065f46; }
+.badge-danger  { background: #fee2e2; color: #991b1b; }
+.badge-info    { background: #dbeafe; color: #1e40af; }
+
+.allergy-alert {
+    background: #fee2e2;
+    border: 1px solid #fca5a5;
+    color: #991b1b;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 13.5px;
+    margin-bottom: 14px;
+    font-weight: 600;
+}

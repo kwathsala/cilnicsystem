@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Financial Analytics - Clinic System</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+    .range-tabs { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; align-items: center; }
+    .range-tabs button {
+        background: #eef1f4; color: #374151; border: none;
+        padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 13px;
+    }
+    .range-tabs button.active { background: #0f4c81; color: #fff; }
+    .custom-range { display: flex; gap: 8px; align-items: center; }
+    .custom-range input { padding: 7px 8px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; }
+
+    .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin-bottom: 20px;
+    }
+    .stat-card {
+        background: #fff;
+        border-radius: 10px;
+        padding: 18px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+    .stat-card .label { font-size: 12.5px; color: #6b7280; margin-bottom: 6px; }
+    .stat-card .value { font-size: 22px; font-weight: 700; color: #0f4c81; }
+    .stat-card.profit .value { color: #065f46; }
+    .stat-card.cost .value { color: #991b1b; }
+
+    .warning-note {
+        background: #fffbeb; border: 1px solid #fde68a; color: #92400e;
+        padding: 10px 14px; border-radius: 6px; font-size: 13px; margin-bottom: 16px;
+    }
+
+    .chart-bars { display: flex; align-items: flex-end; gap: 8px; height: 160px; padding-top: 10px; }
+    .chart-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+    .chart-bar {
+        width: 100%; max-width: 34px; background: #1e88a8; border-radius: 4px 4px 0 0;
+        min-height: 2px; transition: height 0.3s;
+    }
+    .chart-label { font-size: 10.5px; color: #6b7280; margin-top: 6px; text-align: center; }
+    .chart-value { font-size: 10.5px; color: #374151; margin-bottom: 4px; }
+
+    .mini-table td, .mini-table th { font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <h2>📊 Financial Analytics</h2>
+    <div class="user-info">
+        <span id="userLabel"></span>
+        <a href="inventory.html" style="color:#fff;font-size:13px;text-decoration:none;margin-right:6px;">📦 Inventory</a>
+        <button id="logoutBtn">Logout</button>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="range-tabs">
+        <button class="range-btn" data-range="today">Today</button>
+        <button class="range-btn" data-range="week">Last 7 Days</button>
+        <button class="range-btn" data-range="month">This Month</button>
+        <div class="custom-range">
+            <input type="date" id="customFrom">
+            <span style="font-size:12px;color:#6b7280;">to</span>
+            <input type="date" id="customTo">
+            <button class="btn btn-secondary" id="customApplyBtn">Apply</button>
+        </div>
+    </div>
+
+    <div id="missingCostWarning" class="warning-note" style="display:none;"></div>
+
+    <div class="stat-grid">
+        <div class="stat-card">
+            <div class="label">Total Revenue</div>
+            <div class="value" id="statRevenue">Rs. 0</div>
+        </div>
+        <div class="stat-card cost">
+            <div class="label">Cost of Goods Sold</div>
+            <div class="value" id="statCogs">Rs. 0</div>
+        </div>
+        <div class="stat-card profit">
+            <div class="label">Net Profit</div>
+            <div class="value" id="statProfit">Rs. 0</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">Invoices</div>
+            <div class="value" id="statInvoices">0</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Revenue Breakdown</h3>
+        <div class="form-grid">
+            <div class="field"><label>Consultation Fees</label><div id="breakdownConsultation" style="font-size:16px;font-weight:600;">Rs. 0</div></div>
+            <div class="field"><label>Medicine Sales</label><div id="breakdownMedicine" style="font-size:16px;font-weight:600;">Rs. 0</div></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Daily Revenue Trend</h3>
+        <div class="chart-bars" id="chartBars"></div>
+    </div>
+
+    <div class="card">
+        <h3>🏆 Top 5 Medicines by Revenue</h3>
+        <table class="mini-table">
+            <thead><tr><th>Medicine</th><th>Qty Sold</th><th>Revenue (Rs.)</th></tr></thead>
+            <tbody id="topMedicinesBody"><tr><td colspan="3">Loading...</td></tr></tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>👨‍⚕️ Revenue by Doctor</h3>
+        <table class="mini-table">
+            <thead><tr><th>Doctor</th><th>Visits Billed</th><th>Revenue (Rs.)</th></tr></thead>
+            <tbody id="byDoctorBody"><tr><td colspan="3">Loading...</td></tr></tbody>
+        </table>
+    </div>
+
+</div>
+
+<script src="js/common.js?v=202608161754"></script>
+<script src="js/analytics.js?v=202608161754"></script>
+</body>
+</html>
